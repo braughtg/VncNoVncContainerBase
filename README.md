@@ -15,7 +15,7 @@ Images such as these are ideal for building platforms for course assignments.  F
   * E.g. [Tiger VNC](https://sourceforge.net/projects/tigervnc/files/stable/)
 
 ## Using this template repo
-To use this repository to create a custom image/container for a specific purpose (e.g. a course project) do the following:
+To use this repository to create base images for specific class of purposes (e.g. a sequence of course projects) do the following:
 * Click the "Use this template" button
 * Choose "Create a new repository"
 * Create the new repository in your GitHub space.
@@ -25,6 +25,7 @@ To use this repository to create a custom image/container for a specific purpose
   * Dockerhub username
   * The image name and tag you want to use.
 * Run the `build.bash` script.
+* Then use the generated image as the `FROM` for new images that specialize it.
 
 ## Using to the container
 In the commands below the following templates are used:
