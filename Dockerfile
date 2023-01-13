@@ -81,6 +81,10 @@ COPY vscodium.bash .
 RUN ./vscodium.bash \
  && rm vscodium.bash
 
+# Add environment variable to /etc/profile so that VSCodium
+# launches on Windows with WSL without a warning.
+ENV DONT_PROMPT_WSL_INSTALL=1
+
 # Create the non-root user inside the container and give them sudo privlidges.
 RUN useradd \
     -m $USERNAME -p "$(openssl passwd -1 $PASSWD)" \
