@@ -5,6 +5,9 @@
 rm /tmp/.X11-unix/X1
 rm /tmp/.X1-lock
 
+# Ensure that the dbus service is running.
+echo "student" | sudo /etc/init.d/dbus restart
+
 # Launch the VNC server
 vncserver \
   -localhost no \
