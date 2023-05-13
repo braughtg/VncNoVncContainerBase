@@ -151,6 +151,10 @@ PLATFORMS=linux/amd64,linux/arm64
 
 ### Additional Information
 
+#### Running tasks on startup
+
+When started the container produced runs the `startup.bash` script.  This script starts the VNC and noVNC servers and does a little additional housekeeping.  It then looks for a script `/home/student/.contconf/launch.bash`.  If that script is found it will be run.  That scrip should run only background tasks (e.g. starting services and servers) and then exit.  By default there is no `/home/student/.contconf/launch.bash` script installed.  However, the [CourseContainerTemplate](https://github.com/braughtg/CourseContainerTemplate) repository provides an empty one by default that is copied into the image that it produces.
+
 #### Preserving the users home directory:
 
 The container created by the above command works well for most basic use cases. It persists changes to the container (e.g. user installed software, changes within the user home directory) in the writeable layer of the container.  Thus, all changes are preserved across container stops and starts, so long as the container is not deleted.  If the container is deleted all changes will be lost. 
