@@ -9,13 +9,10 @@ ENV TZ=America/New_York
 ARG USERNAME=student
 ARG PASSWD=student
 
-# Not sure how much of this is necessary.
-#
-# It is from the cypress/base:16.14.2 Dockerfile.
+# Install the necessary system software.
+# The list of system software was adapted from It is from the cypress/base:16.14.2 Dockerfile.
 #  https://github.com/cypress-io/cypress-docker-images/blob/master/base/16.14.2/Dockerfile
-#
-# Including it here allows this to be build from the debian:bullseye image.
-# Maybe able to pare it down some.
+
 RUN apt update \
  && apt install --no-install-recommends -y \
         libgtk2.0-0 \
@@ -27,33 +24,42 @@ RUN apt update \
         libxss1 \
         libasound2 \
         libxtst6 \
-        procps \
-        xauth \
-        xvfb \
-        vim-tiny \
-        nano \
-        fonts-noto-color-emoji
-
-# Install some base dependencies
-# firefox-esr is included here because it is not in the cypress
-# image for arm64 at this time.
-RUN apt update \
- && apt install -y --no-install-recommends \
+        libpci3 \
+        libsecret-1-0 \
         software-properties-common \
         gnupg2 \
         atfs \
-        libsecret-1-0 \
+        at-spi2-core \
+        procps \
+        xauth \
+        xvfb \
+        fonts-noto-color-emoji
+
+# Install some base applications.
+RUN apt update \
+ && apt install --no-install-recommends -y \
+        sudo \
+        vim-tiny \
+        nano \
         wget \
         curl \
         man \
         synaptic \
-        libpci3 \
-        sudo \
         firefox-esr \
         git \
         gedit \
         emacs \
         meld
+
+# Install VSCodium.  Note: Extensions can be installed later so that
+# they are installed just for the non-root user.
+COPY vscodium.bash .
+RUN ./vscodium.bash \
+ && rm vscodium.bash
+
+# Add environment variable to /etc/profile so that VSCodium
+# launches on Windows with WSL without a warning.
+ENV DONT_PROMPT_WSL_INSTALL=1
 
 # Install the XFCE4 desktop environment.
 # Note: Power management does not work inside docker so it is removed.
@@ -74,16 +80,6 @@ RUN apt install -y --no-install-recommends \
         novnc \
         net-tools \
  && cp /usr/share/novnc/vnc.html /usr/share/novnc/index.html
-
-# Install VSCodium.  Note: Extensions can be installed later so that
-# they are installed just for the non-root user.
-COPY vscodium.bash .
-RUN ./vscodium.bash \
- && rm vscodium.bash
-
-# Add environment variable to /etc/profile so that VSCodium
-# launches on Windows with WSL without a warning.
-ENV DONT_PROMPT_WSL_INSTALL=1
 
 # Create the non-root user inside the container and give them sudo privlidges.
 RUN useradd \
