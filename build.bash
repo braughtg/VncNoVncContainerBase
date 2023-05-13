@@ -1,10 +1,13 @@
 # Build and push the multi-architectrue images.
 
+# Modify the following variables as appropraite when building new base inmages.
 DOCKER_HUB_USER="braughtg"
 IMAGE="vnc-novnc-base"
-TAG="1.0.0"
+TAG="1.0.1"
+PLATFORMS=linux/amd64,linux/arm64
 
-LOGGED_IN=$(cat ~/.docker/config.json 2> /dev/null | grep "index.docker.io" | wc -l | cut -f 8 -d ' ')
+# Check that the DockerHub user identified above is logged in.
+LOGGED_IN=$(docker-credential-desktop list | grep "$DOCKER_HUB_USER" | wc -l | cut -f 8 -d ' ')
 if [ "$LOGGED_IN" == "0" ];
 then
   echo "Please log into Docker Hub as $DOCKER_HUB_USER before building images."
@@ -23,11 +26,18 @@ then
 fi
 
 # Switch to use the builder for this image.
-echo "Using the $BUILDER_NAME."
 docker buildx use $BUILDER_NAME
 
-# Build and push the images.
-FULL_IMAGE=$DOCKER_HUB_USER/$IMAGE:$TAG
-PLATFORMS=linux/amd64,linux/arm64
+# Print some info on the images
+FULL_IMAGE_NAME=$DOCKER_HUB_USER/$IMAGE:$TAG
+echo
+echo "Buiding image: $IMAGE"
+echo "     With tag: $TAG"
+echo "For platforms: $PLATFORMS."
+echo "Using builder: $BUILDER_NAME."
+echo "   Pushing to: $DOCKER_HUB_USER"
+echo "    Full name: $FULL_IMAGE_NAME"
+echo
 
-docker buildx build --platform $PLATFORMS -t $FULL_IMAGE --push .
+# Build and push the images.
+docker buildx build --platform $PLATFORMS -t $FULL_IMAGE_NAME --push .
