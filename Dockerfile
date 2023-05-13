@@ -107,6 +107,7 @@ USER $USERNAME
 # Add some scripts for the running container.
 RUN mkdir .contconf \
  && mkdir -p .config/autostart
+
 # startup.bash is run when the container starts.  It sets the ownership and group
 # for the FarmData2 repo and the fd2test directories and starts the VNC and noVNC
 # servers.
@@ -130,7 +131,9 @@ RUN chmod +x .contconf/startup.bash \
 RUN git config --global credential.helper store \
  && git config --global merge.conflictstyle diff3 \
  && git config --global merge.tool meld \
- && git config --global mergetool.keepBackup false
+ && git config --global mergetool.keepBackup false \
+ && echo "" >> .bashrc \
+ && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
 # Stuff to reduce image size.
 USER root
