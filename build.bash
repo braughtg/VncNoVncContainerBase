@@ -6,16 +6,6 @@ IMAGE="vnc-novnc-base"
 TAG="1.1.0"
 PLATFORMS=linux/amd64,linux/arm64
 
-# Check that the DockerHub user identified above is logged in.
-LOGGED_IN=$(docker-credential-desktop list | grep "$DOCKER_HUB_USER" | wc -l | cut -f 8 -d ' ')
-if [ "$LOGGED_IN" == "0" ];
-then
-  echo "Please log into Docker Hub as $DOCKER_HUB_USER before building images."
-  echo "  Use: docker login"
-  echo "This allows multi architecture images to be pushed."
-  exit -1
-fi
-
 # Check for the local build flag -d
 LOCAL_BUILD=0
 getopts 'd' opt 2> /dev/null
@@ -24,9 +14,20 @@ then
   LOCAL_BUILD=1
 fi
 
-# Only make the builder if we are pushing the images.
+# Only check the login and make the builder if we are pushing the images.
 if [ $LOCAL_BUILD == 0 ];
 then
+
+  # Check that the DockerHub user identified above is logged in.
+  LOGGED_IN=$(docker-credential-desktop list | grep "$DOCKER_HUB_USER" | wc -l | cut -f 8 -d ' ')
+  if [ "$LOGGED_IN" == "0" ];
+  then
+    echo "Please log into Docker Hub as $DOCKER_HUB_USER before building images."
+    echo "  Use: docker login"
+    echo "This allows multi architecture images to be pushed."
+    exit -1
+  fi
+
   # Create a builder for this image if it doesn't exist.
   BUILDER_NAME=vncbuilder
   GIT_KIT_BUILDER=$(docker buildx ls | grep "$BUILDER_NAME" | wc -l | cut -f 8 -d ' ')
