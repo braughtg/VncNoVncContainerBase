@@ -34,7 +34,7 @@ then
   if [ "$GIT_KIT_BUILDER" == "0" ];
   then
     echo "Making new builder for $BUILDER_NAME images."
-    docker buildx create --name $BUILDER_NAME
+    docker buildx create --name $BUILDER_NAME --driver docker-container --bootstrap
   fi
 
   # Switch to use the builder for this image.
