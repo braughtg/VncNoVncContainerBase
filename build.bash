@@ -30,8 +30,8 @@ then
 
   # Create a builder for this image if it doesn't exist.
   BUILDER_NAME=vncbuilder
-  GIT_KIT_BUILDER=$(docker buildx ls | grep "$BUILDER_NAME" | wc -l | cut -f 8 -d ' ')
-  if [ "$GIT_KIT_BUILDER" == "0" ];
+  BUILDER=$(docker buildx ls | grep "$BUILDER_NAME" | wc -l | cut -f 8 -d ' ')
+  if [ "$BUILDER" == "0" ];
   then
     echo "Making new builder for $BUILDER_NAME images."
     docker buildx create --name $BUILDER_NAME --driver docker-container --bootstrap

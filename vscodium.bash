@@ -29,7 +29,9 @@
 
 # Download and install a specific version of codium.
 ARCH=$(dpkg --print-architecture)
-VER="1.70.2.22230"
+VER="1.77.3.23102"   # Works
+#VER="1.78.2.23132"  # Does not work.
+
 DEB="codium_"$VER"_"$ARCH".deb"
 URL="https://github.com/VSCodium/vscodium/releases/download/"$VER"/"$DEB
 wget $URL
