@@ -127,7 +127,7 @@ RUN git config --global credential.helper store \
  && git config --global merge.tool meld \
  && git config --global mergetool.keepBackup false \
  && git config --global core.editor "nano" \
- && git config --global pull.ff only
+ && git config --global pull.ff only \
  && echo "" >> .bashrc \
  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
