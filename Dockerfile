@@ -10,11 +10,10 @@ ARG USERNAME=student
 ARG PASSWD=student
 
 # Install the necessary system software.
-# The list of system software was adapted from It is from the cypress/base:16.14.2 Dockerfile.
+# The list of system software was adapted from the cypress/base:16.14.2 Dockerfile.
 #  https://github.com/cypress-io/cypress-docker-images/blob/master/base/16.14.2/Dockerfile
-
-RUN apt update \
- && apt install --no-install-recommends -y \
+RUN apt-get update \
+ && apt-get install --no-install-recommends -y \
         libgtk2.0-0 \
         libgtk-3-0 \      
         libnotify-dev \
@@ -36,8 +35,7 @@ RUN apt update \
         fonts-noto-color-emoji
 
 # Install some base applications.
-RUN apt update \
- && apt install --no-install-recommends -y \
+RUN apt-get install --no-install-recommends -y \
         sudo \
         vim-tiny \
         nano \
@@ -63,17 +61,17 @@ ENV DONT_PROMPT_WSL_INSTALL=1
 
 # Install the XFCE4 desktop environment.
 # Note: Power management does not work inside docker so it is removed.
-RUN apt install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
         xfce4 \
         xfce4-goodies \
         xfce4-terminal -y \
- && apt autoremove -y \
+ && apt-get autoremove -y \
         xfce4-power-manager
 
 # Install the Tiger VNC server, the noVNC server and dbus-x11 depndency.
 # Also rename vnc.html so that the the noVNC server can be accessed
 # more directly.
-RUN apt install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
         tigervnc-standalone-server \
         tigervnc-common \
         dbus-x11 \
@@ -128,14 +126,16 @@ RUN git config --global credential.helper store \
  && git config --global merge.conflictstyle diff3 \
  && git config --global merge.tool meld \
  && git config --global mergetool.keepBackup false \
+ && git config --global core.editor "nano" \
+ && git config --global pull.ff only \
  && echo "" >> .bashrc \
  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
 # Stuff to reduce image size.
 USER root
-RUN apt clean -y \
- && apt autoclean -y \
- && apt autoremove -y \
+RUN apt-get clean -y \
+ && apt-get autoclean -y \
+ && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME

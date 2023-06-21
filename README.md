@@ -29,9 +29,8 @@ The requirements for using the image produced are:
 
 A multi-architecture image (`linux/amd64`, `linux/arm64`) generated from this repo is available at on dockerhub at:
 
-```
-[braughtg/vnc-novnc-base](https://hub.docker.com/repository/docker/braughtg/vnc-novnc-base/general)
-```
+[`braughtg/vnc-novnc-base`](https://hub.docker.com/r/braughtg/vnc-novnc-base/tags)
+
 
 ### Getting the image:
 
