@@ -10,9 +10,8 @@ ARG USERNAME=student
 ARG PASSWD=student
 
 # Install the necessary system software.
-# The list of system software was adapted from It is from the cypress/base:16.14.2 Dockerfile.
+# The list of system software was adapted from the cypress/base:16.14.2 Dockerfile.
 #  https://github.com/cypress-io/cypress-docker-images/blob/master/base/16.14.2/Dockerfile
-
 RUN apt-get update \
  && apt-get install --no-install-recommends -y \
         libgtk2.0-0 \
@@ -127,6 +126,7 @@ RUN git config --global credential.helper store \
  && git config --global merge.conflictstyle diff3 \
  && git config --global merge.tool meld \
  && git config --global mergetool.keepBackup false \
+ && git config --global core.editor "nano"
  && echo "" >> .bashrc \
  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
