@@ -135,7 +135,7 @@ RUN git config --global credential.helper store \
 USER root
 RUN apt-get clean -y \
  && apt-get autoclean -y \
- && apt-ger autoremove -y \
+ && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
 
 USER $USERNAME
