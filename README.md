@@ -42,7 +42,7 @@ docker pull <dockerhub user>/<image>:<tag>
 
 For example:
 ```
-docker pull braughtg/vnc-novnc-base:1.1.0
+docker pull braughtg/vnc-novnc-base:1.2.0
 ```
 
 ### Creating the container:
@@ -54,7 +54,7 @@ docker create --name <container name> --publish 5901:5901 --publish 6901:6901 <d
 
 For example:
 ```
-docker create --name vnc --publish 5901:5901 --publish 6901:6901 braughtg/vnc-novnc-base:1.1.0
+docker create --name vnc --publish 5901:5901 --publish 6901:6901 braughtg/vnc-novnc-base:1.2.0
 ```
 
 ### Starting the container:
@@ -137,7 +137,7 @@ Use the following command to build a single architecture matching the host machi
 # Modify the following variables as appropraite when building new base inmages.
 DOCKER_HUB_USER="braughtg"
 IMAGE="vnc-novnc-base"
-TAG="1.1.0"
+TAG="1.2.0"
 PLATFORMS=linux/amd64,linux/arm64
 ```
 
