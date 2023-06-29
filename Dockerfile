@@ -132,6 +132,10 @@ RUN git config --global credential.helper store \
  && echo "" >> .bashrc \
  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
+# Install some useful VSCodium extensions
+RUN codium --install-extension streetsidesoftware.code-spell-checker \
+  && codium --install-extension bierner.markdown-preview-github-styles
+
 # Stuff to reduce image size.
 USER root
 RUN apt-get clean -y \
