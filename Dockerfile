@@ -129,6 +129,7 @@ RUN git config --global credential.helper store \
  && git config --global core.editor "nano" \
  && git config --global pull.ff only \
  && git config --global init.defaultBranch main \
+ && git config --global safe.directory '*' \
  && echo "" >> .bashrc \
  && echo "source /usr/share/bash-completion/completions/git" >> .bashrc
 
