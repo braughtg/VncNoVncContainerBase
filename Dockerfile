@@ -124,8 +124,9 @@ RUN chmod +x .contconf/startup.bash \
 # Do some git configuration so that the student doesn't have to.
 RUN git config --global credential.helper store \
  && git config --global merge.conflictstyle diff3 \
- && git config --global merge.tool meld \
+ && git config --global merge.tool vscode \
  && git config --global mergetool.keepBackup false \
+ && git config --global mergetool.vscode.cmd '/usr/bin/codium --no-sandbox --wait --new-window --merge $LOCAL $REMOTE $BASE $MERGED' \
  && git config --global core.editor "nano" \
  && git config --global pull.ff only \
  && git config --global init.defaultBranch main \
